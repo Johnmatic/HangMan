@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Game.h"
+#include <conio.h>
 
 using namespace std;
 
@@ -13,6 +14,7 @@ void Shutdown();
 
 bool g_exitGame = false;
 Game g_game;
+char input;
 
 int main()
 {
@@ -38,7 +40,7 @@ void Initialize()
 
 void GetInput()
 {
-	// g_game
+	input = _getch();
 }
 
 void Update(float deltaTime)
