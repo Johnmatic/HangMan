@@ -13,6 +13,10 @@ void Game::OnInit()
 	int randomIndex = rand() % m_wordsPool.size();
 	m_word = m_wordsPool[randomIndex];
 	m_lettersFound = new bool[m_word.length()];
+	for (int i = 0; i < m_word.length(); ++i)
+	{
+		m_lettersFound[i] = false;
+	}
 	m_strikes = 0;
 }
 
@@ -107,6 +111,29 @@ void Game::OnRender()
 	
 	cout << "^^^^^^^^^^^^^" << endl; //"grass" always visible
 
+	// Render word to be guessed
+	int counter = 0;
+	for (char c : m_word)
+	{
+		cout << " ";
+		if (m_lettersFound[counter])
+		{
+			cout << c;
+		}
+		else
+		{
+			cout << '_';
+		}
+		cout << " ";
+	}
+	cout << endl;
+
+	//Render guessed letters
+	for (char c : m_guessedLetters)
+	{
+		cout << c << " ";
+	}
+	cout << endl;
 
 }
 
