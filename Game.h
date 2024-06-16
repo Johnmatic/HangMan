@@ -9,7 +9,8 @@ class Game
 	{
 		START,
 		UPDATE,
-		FINISH
+		FINISH_LOST,
+		FINISH_WON
 	};
 
 public:
@@ -22,7 +23,7 @@ public:
 private:
 	std::string m_word;
 	std::vector<std::string> m_wordsPool = { "kolor", "silnik", "wzorzec", "silnie", "kanapka" };
-	std::vector<bool> m_guessedLetters;
+	std::vector<char> m_guessedLetters;
 	GameState m_gameState = GameState::START;
 	char m_lastInput;
 	bool* m_lettersFound;

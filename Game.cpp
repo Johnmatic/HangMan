@@ -6,6 +6,8 @@
 
 using namespace std;
 
+#define MAX_STRIKES 7
+
 void Game::OnInit()
 {
 	m_guessedLetters.clear();
@@ -18,6 +20,10 @@ void Game::OnInit()
 		m_lettersFound[i] = false;
 	}
 	m_strikes = 0;
+
+	OnRender();
+
+	m_gameState = GameState::UPDATE;
 }
 
 void Game::OnInput()
@@ -25,6 +31,9 @@ void Game::OnInput()
 	char input;
 	//Validate input 
 	bool inputValid = false;
+
+	cout << "Provide your letter: " << endl;
+	// Checking if input is letter, duplicated guesses are counted as valid, but will be strike
 	while (!inputValid)
 	{
 		input = _getch();
@@ -47,6 +56,7 @@ void Game::OnInput()
 
 bool Game::OnUpdate(float deltaTime)
 {
+	bool retValue = false;
 	bool foundAny = false;
 	int counter = 0;
 	m_guessedLetters.push_back(m_lastInput);
@@ -64,13 +74,55 @@ bool Game::OnUpdate(float deltaTime)
 	{
 		m_strikes++;
 	}
+	else
+	{
+		bool won = true;
+		for (int i = 0; i < m_word.length(); ++i)
+		{
+			if (m_lettersFound[i] == false)
+			{
+				won = false;
+			}
+		}
 
-	return false;
+		if (true == won)
+		{
+			m_gameState = GameState::FINISH_WON;
+			retValue = true;
+		}
+	}
+	
+	if (m_strikes > MAX_STRIKES)
+	{
+		m_gameState = GameState::FINISH_LOST;
+		retValue = true;
+	}
+
+	return retValue;
 }
 
 void Game::OnRender()
 {
 	system("cls");
+
+	switch (m_gameState)
+	{
+	case Game::GameState::START:
+		cout << "Welcome to HangMan game! Provide your first letter to start guessing the word!" << endl;
+		break;
+	case Game::GameState::UPDATE:
+		cout << "Provide your next letter!" << endl;
+		break;
+	case Game::GameState::FINISH_LOST:
+		cout << "You lost!" << endl;
+		break;
+	case Game::GameState::FINISH_WON:
+		cout << "You won!" << endl;
+		break;
+	default:
+		break;
+	}
+
 	//Render hangman
 	if (m_strikes >= 2)
 	{
@@ -108,14 +160,18 @@ void Game::OnRender()
 
 		cout << "|\\" << endl;
 	}
+	else
+	{
+		cout << endl << endl << endl << endl << endl << endl << endl;
+	}
 	
 	cout << "^^^^^^^^^^^^^" << endl; //"grass" always visible
+	cout << endl;
 
 	// Render word to be guessed
 	int counter = 0;
 	for (char c : m_word)
 	{
-		cout << " ";
 		if (m_lettersFound[counter])
 		{
 			cout << c;
@@ -125,10 +181,13 @@ void Game::OnRender()
 			cout << '_';
 		}
 		cout << " ";
+		counter++;
 	}
+	cout << endl;
 	cout << endl;
 
 	//Render guessed letters
+	cout << "Guess history:" << endl;
 	for (char c : m_guessedLetters)
 	{
 		cout << c << " ";
