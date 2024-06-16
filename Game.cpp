@@ -66,6 +66,47 @@ bool Game::OnUpdate(float deltaTime)
 
 void Game::OnRender()
 {
+	system("cls");
+	//Render hangman
+	if (m_strikes >= 2)
+	{
+		cout << "________" << endl;
+	}
+	else
+	{
+		cout << "        " << endl;
+	}
+
+	if (m_strikes >= 1)
+	{
+		cout << "|";
+		if (m_strikes >= 2) cout << "/     ";
+		if (m_strikes >= 3) cout << "|";
+		cout << endl;
+
+		cout << "|      ";
+		if (m_strikes >= 4) cout << "O";
+		cout << endl;
+
+		cout << "|     ";
+		if (m_strikes >= 5) cout << "/|\\";
+		cout << endl;
+
+		cout << "|      ";
+		if (m_strikes >= 6) cout << "M";
+		cout << endl;
+
+		cout << "|     ";
+		if (m_strikes >= 7) cout << "/ \\";
+		cout << endl;
+
+		cout << "|" << endl;
+
+		cout << "|\\" << endl;
+	}
+	
+	cout << "^^^^^^^^^^^^^" << endl; //"grass" always visible
+
 
 }
 
