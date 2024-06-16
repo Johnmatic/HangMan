@@ -1,6 +1,10 @@
 #include "Game.h"
 #include <cstdlib>
 #include <ctime>
+#include <iostream>
+#include <conio.h>
+
+using namespace std;
 
 void Game::OnInit()
 {
@@ -12,14 +16,32 @@ void Game::OnInit()
 
 void Game::OnInput()
 {
-
+	char input;
+	//Validate input 
+	bool inputValid = false;
+	while (!inputValid)
+	{
+		input = _getch();
+		if (input >= 'a' && input <= 'z')
+		{
+			inputValid = true;
+		}
+		else if (input >= 'A' && input <= 'Z')
+		{
+			input += ('a' - 'A'); //to lowercase
+			inputValid = true;
+		}
+		else
+		{
+			cout << input << " Input not valid!" << endl;
+		}
+	}
+	lastInput = input;
 }
 
 bool Game::OnUpdate(float deltaTime)
 {
-
-
-
+	m_guessedLetters.push_back(lastInput);
 
 	return false;
 }

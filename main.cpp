@@ -1,6 +1,5 @@
 #include <iostream>
 #include "Game.h"
-#include <conio.h>
 
 using namespace std;
 
@@ -21,7 +20,7 @@ int main()
 
 	Initialize();
 
-	while (g_exitGame)
+	while (!g_exitGame)
 	{
 		GetInput();
 		Update(0.0f);
@@ -40,7 +39,7 @@ void Initialize()
 
 void GetInput()
 {
-	input = _getch();
+	g_game.OnInput();
 }
 
 void Update(float deltaTime)
