@@ -22,7 +22,7 @@ public:
 
 private:
 	std::string m_word;
-	std::vector<std::string> m_wordsPool = { "kolor", "silnik", "wzorzec", "silnie", "kanapka" };
+	std::vector<std::string> m_wordsPool;
 	std::vector<char> m_guessedLetters;
 	GameState m_gameState = GameState::START;
 	char m_lastInput;

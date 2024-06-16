@@ -2,14 +2,27 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
+#include <fstream>
 #include <conio.h>
 
 using namespace std;
 
 #define MAX_STRIKES 7
+#define FILENAME "words.txt"
 
 void Game::OnInit()
 {
+	ifstream inputFile;
+	string line;
+	inputFile.open(FILENAME, ios::in);
+	if (inputFile.is_open())
+	{
+		while (getline(inputFile, line))
+		{
+			m_wordsPool.push_back(line);
+		}
+		inputFile.close();
+	}
 	m_guessedLetters.clear();
 	srand(std::time(NULL));
 	int randomIndex = rand() % m_wordsPool.size();
@@ -114,7 +127,7 @@ void Game::OnRender()
 		cout << "Provide your next letter!" << endl;
 		break;
 	case Game::GameState::FINISH_LOST:
-		cout << "You lost!" << endl;
+		cout << "You lost! Your word was: " << m_word << endl;
 		break;
 	case Game::GameState::FINISH_WON:
 		cout << "You won!" << endl;
