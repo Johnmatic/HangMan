@@ -7,7 +7,7 @@
 
 using namespace std;
 
-#define MAX_STRIKES 7
+#define MAX_STRIKES 10
 #define FILENAME "words.txt"
 
 void Game::OnInit()
@@ -137,7 +137,7 @@ void Game::OnRender()
 	}
 
 	//Render hangman
-	if (m_strikes >= 2)
+	if (m_strikes >= 3)
 	{
 		cout << "________" << endl;
 	}
@@ -149,29 +149,31 @@ void Game::OnRender()
 	if (m_strikes >= 1)
 	{
 		cout << "|";
-		if (m_strikes >= 2) cout << "/     ";
-		if (m_strikes >= 3) cout << "|";
+		if (m_strikes >= 4) cout << "/     ";
+		if (m_strikes >= 5) cout << "|";
 		cout << endl;
 
 		cout << "|      ";
-		if (m_strikes >= 4) cout << "O";
+		if (m_strikes >= 6) cout << "O";
 		cout << endl;
 
 		cout << "|     ";
-		if (m_strikes >= 5) cout << "/|\\";
+		if (m_strikes >= 8) cout << "/|\\";
+		else if (m_strikes >= 7) cout << " | ";
 		cout << endl;
 
 		cout << "|      ";
-		if (m_strikes >= 6) cout << "M";
+		if (m_strikes >= 9) cout << "M";
 		cout << endl;
 
 		cout << "|     ";
-		if (m_strikes >= 7) cout << "/ \\";
+		if (m_strikes >= 10) cout << "/ \\";
 		cout << endl;
 
 		cout << "|" << endl;
 
-		cout << "|\\" << endl;
+		if(m_strikes >= 2) cout << "|\\" << endl;
+		else cout << "|" << endl;
 	}
 	else
 	{
@@ -205,6 +207,7 @@ void Game::OnRender()
 	{
 		cout << c << " ";
 	}
+	cout << endl;
 	cout << endl;
 
 }
