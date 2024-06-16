@@ -12,6 +12,8 @@ void Game::OnInit()
 	srand(std::time(NULL));
 	int randomIndex = rand() % m_wordsPool.size();
 	m_word = m_wordsPool[randomIndex];
+	m_lettersFound = new bool[m_word.length()];
+	m_strikes = 0;
 }
 
 void Game::OnInput()
@@ -36,12 +38,28 @@ void Game::OnInput()
 			cout << input << " Input not valid!" << endl;
 		}
 	}
-	lastInput = input;
+	m_lastInput = input;
 }
 
 bool Game::OnUpdate(float deltaTime)
 {
-	m_guessedLetters.push_back(lastInput);
+	bool foundAny = false;
+	int counter = 0;
+	m_guessedLetters.push_back(m_lastInput);
+	for (char c : m_word)
+	{
+		if ((c == m_lastInput) && (m_lettersFound[counter] == false))
+		{
+			foundAny = true;
+			m_lettersFound[counter] = true;
+		}
+		counter++;
+	}
+
+	if (!foundAny)
+	{
+		m_strikes++;
+	}
 
 	return false;
 }
