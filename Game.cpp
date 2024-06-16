@@ -23,8 +23,8 @@ void Game::OnInit()
 		}
 		inputFile.close();
 	}
-	m_guessedLetters.clear();
 	srand(std::time(NULL));
+	m_guessedLetters.clear();
 	int randomIndex = rand() % m_wordsPool.size();
 	m_word = m_wordsPool[randomIndex];
 	m_lettersFound = new bool[m_word.length()];
@@ -215,5 +215,5 @@ void Game::OnRender()
 void Game::OnShutdown()
 {
 	m_guessedLetters.clear();
-
+	delete[] m_lettersFound;
 }

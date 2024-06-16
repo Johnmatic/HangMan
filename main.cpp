@@ -3,13 +3,11 @@
 
 using namespace std;
 
-
 void Initialize();
 void GetInput();
 void Update(float deltaTime);
 void Render();
 void Shutdown();
-
 
 bool g_exitGame = false;
 Game g_game;

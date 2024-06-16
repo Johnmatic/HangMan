@@ -2,7 +2,6 @@
 #include <string>
 #include <vector>
 
-
 class Game
 {
 	enum class GameState
